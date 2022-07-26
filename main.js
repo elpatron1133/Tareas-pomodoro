@@ -9,6 +9,8 @@ const itTask  = document.querySelector('#itTask')
 const form  = document.querySelector('#form');
 const taskName = document.querySelector('#time #taskName');
 
+renderTime();
+renderTasks();
 
 form.addEventListener('submit', e =>{
     e.preventDefault();
@@ -33,7 +35,7 @@ function renderTasks(){
      const html = tasks.map(task => {
         return `
         <div class="task">
-        <div class="completed">${task.completed ? `<span class="done">Completada!!!</span>` : `<button class="start-button" data-id="${task.id}">Iniciar tarea</button>`}</div>
+        <div class="completed">${task.completed ? `<span class="done">Tarea completada!!!</span>` : `<button class="start-button" data-id="${task.id}">Iniciar tarea</button>`}</div>
         <div class="title">${task.title}</div>
 
         </div>
@@ -50,18 +52,18 @@ function renderTasks(){
             if(!timer){
                 const id = button.getAttribute('data-id');
                 startButtonHandler(id);
-                button.textContent = 'En progreso...'
+                button.textContent = 'Tarea en progreso...'
             }
         });
     });
 }
 
 function startButtonHandler(id) {
-    // time  = 25 * 60;
-    time  = 5;
+    time  = 30 * 60;
     current = id;
     const tasktIndex = tasks.findIndex(task => task.id === id);
     taskName.textContent = tasks[tasktIndex].title;
+        renderTime();
     
     timer = setInterval(() => {
         timeHandler(id);
@@ -83,8 +85,9 @@ function timeHandler(id){
 }
 
 function startBreak(){
-    time = 3;
-    taskName.textContent = 'break';
+    time = 9 * 60 ;
+    taskName.textContent = 'Break de 9 minutos!!! ';
+    renderTime();
     timerBreak = setInterval(() => {
         timerBreakHandler();
     }, 1000);

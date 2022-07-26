@@ -1,3 +1,69 @@
 body{
-    background: grey;
+    background: #0d7377;
+}
+
+#app{
+    background-color: #b4e4e6;
+    width: 500px;
+    margin: 0 auto;
+    border: solid 1px #ccc;
+    padding: 20px;
+    border-radius: 25px;
+}
+
+#time{
+    text-align: center;
+    padding: 20px 0;
+
+}
+
+#time #value{
+    font-size: 49px;
+    font-weight: bolder;
+}
+.form{
+display: flex ;
+justify-content: center;
+}
+
+input[type="text"]{
+    padding: 10px;
+    border: solid 1 px #ccc;
+    width: 300px;
+}
+button,input[type="submit"]{
+    border: none;
+    background: #036;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#tasks{
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.task{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.task .completed{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.done{
+    display: inline-block;
+    padding: 5px;
+    background-color: rgb(25, 173, 45);
+    border-radius: 5px;
+}
+
+#taskName{
+    font-size: 30px;
 }
