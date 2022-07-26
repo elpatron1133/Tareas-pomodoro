@@ -7,13 +7,15 @@ let current = null;
 const bAdd  = document.querySelector('#bAdd')
 const itTask  = document.querySelector('#itTask')
 const form  = document.querySelector('#form');
+const taskName = document.querySelector('#time #taskName');
+
 
 form.addEventListener('submit', e =>{
     e.preventDefault();
     if(itTask.value !== ''){
         createTask(itTask.value);
         itTask.value = '';
-        renderTask();
+        renderTasks();
     }
 } );
 
@@ -27,11 +29,11 @@ function createTask(value) {
     tasks.unshift(newTask);
 }
 
-function renderTask(){
+function renderTasks(){
      const html = tasks.map(task => {
         return `
         <div class="task">
-        <div class="completed">${task.completed ? `<span class="done">Done</span>` : `<button class="start-button" data-id="${task.id}">Start</button>`}</div>
+        <div class="completed">${task.completed ? `<span class="done">Completada!!!</span>` : `<button class="start-button" data-id="${task.id}">Iniciar tarea</button>`}</div>
         <div class="title">${task.title}</div>
 
         </div>
@@ -40,4 +42,79 @@ function renderTask(){
 
     const tasksContainer =  document.querySelector("#tasks");
     tasksContainer.innerHTML = html.join("");
+
+    const startButtons = document.querySelectorAll('.task .start-button');
+
+    startButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            if(!timer){
+                const id = button.getAttribute('data-id');
+                startButtonHandler(id);
+                button.textContent = 'En progreso...'
+            }
+        });
+    });
 }
+
+function startButtonHandler(id) {
+    // time  = 25 * 60;
+    time  = 5;
+    current = id;
+    const tasktIndex = tasks.findIndex(task => task.id === id);
+    taskName.textContent = tasks[tasktIndex].title;
+    
+    timer = setInterval(() => {
+        timeHandler(id);
+    }, 1000);
+}
+
+
+function timeHandler(id){
+    time--;
+    renderTime();
+
+    if(time === 0){
+        clearInterval(timer);
+        markComplete(id);
+        timer = null;
+        renderTasks();
+        startBreak();
+    }
+}
+
+function startBreak(){
+    time = 3;
+    taskName.textContent = 'break';
+    timerBreak = setInterval(() => {
+        timerBreakHandler();
+    }, 1000);
+}
+function timerBreakHandler(){
+    time--;
+    renderTime();
+    
+    if(time === 0){
+        clearInterval(timerBreak); 
+        current  = null;
+        timerBreak = null;
+        taskName.textContent = '';
+        renderTasks();
+    }
+}
+
+function renderTime(){
+    const timeDiv =  document.querySelector('#time #value');
+    const minutes = parseInt(time / 60);
+    const seconds = parseInt(time % 60);
+
+    timeDiv.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+
+function markComplete(id){
+    const tasktIndex = tasks.findIndex((task) => task.id === id);
+    tasks[tasktIndex].completed = true;
+}
+
+
+// me quede en el minuto 36:37
