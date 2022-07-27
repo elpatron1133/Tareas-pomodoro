@@ -67,3 +67,23 @@ button,input[type="submit"]{
 #taskName{
     font-size: 30px;
 }
+
+
+footer{
+  
+    bottom:0;
+    width: 99.5%;
+    height: 70px ;
+    background-color: rgba(124, 221, 238, 0.53);
+    text-align: center;
+    position: absolute;
+    
+  }
+  .imagen-foot{
+    margin-top: 10px;
+    width: 150px;
+    height: 50px;
+    background:black;
+    border-radius: 23px;
+  }
+  
